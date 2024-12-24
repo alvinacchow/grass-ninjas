@@ -88,25 +88,34 @@ const ModifyRoster = () => {
   }
 
   return (
-    <div className="p-5">
-      <div>
+    <div>
+      <div className="p-5 flex-col items-center text-center">
+        {/* Add Image with Link */}
+        <a href="/" className="absolute top-5 left-5">
+          <img
+            src="logo.svg" // Replace with your image URL
+            alt="Home"
+            className="w-20 h-20" // Adjust size as needed
+          />
+        </a>
+
+        <h1 className="mb-5 text-xl text-gray-900 dark:text-white text-center">
+          Set Default Roster
+        </h1>
         <button
-          className="flex bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleSaveChanges}
           disabled={saving || pendingChanges.size === 0}
         >
           {saving ? 'Saving...' : `Save Changes`}
         </button>
-        <h1 className="mb-5 text-lg text-gray-900 dark:text-white text-center">
-          Set Default Roster
-        </h1>
+      
+        {error && (
+          <div className="mb-4 text-center text-red-600">
+            {error}
+          </div>
+        )}
       </div>
-
-      {error && (
-        <div className="mb-4 text-center text-red-600">
-          {error}
-        </div>
-      )}
 
       <ul className="px-40 grid w-full gap-6 md:grid-cols-6">
         {people.length > 0 ? (
