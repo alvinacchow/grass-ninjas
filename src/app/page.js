@@ -10,7 +10,7 @@ export default function Home() {
 
         {/* Logo */}
         <Image
-          className="mb-8 mx-auto"  // margin bottom to add some space between logo and menu
+          className="mb-5 mx-auto"  // margin bottom to add some space between logo and menu
           src="/logo.svg"  // Ensure logo.svg is inside the /public folder
           alt="Grass Ninjas logo"
           width={180}
