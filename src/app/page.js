@@ -15,6 +15,7 @@ export default function Home() {
           alt="Grass Ninjas logo"
           width={180}
           height={38}
+          layout="responsive"
           priority
         />
 
