@@ -69,7 +69,7 @@ const createNew = () => {
   }, [filteredPeople]);
 
   const link = process.env.NEXT_PUBLIC_SHEET_24_25;
-  const defaultMessage = `GOOD AFTERNOON [PLAYER_1]!! 💕 Hope you are pumped for KFALL!! Your tournament buddy is [PLAYER_2]!!!🥳  Remember that the maximum limit to spend is $10. It would be awesome to include a letter/note 💌  and cheer for them on the sideline. You can refer to the Secret Sister spreadsheet on FRISBEE 🥏 LINKS🔗  to see what snacks/drinks 🥂  your tourney buddy would like. See you tomorrow!!\n ${link}`
+  const defaultMessage = `GOOD AFTERNOON [PLAYER_1]!! 💕 Hope you are pumped for the tourney!! Your tournament buddy is [PLAYER_2]!!!🥳  Remember that the maximum limit to spend is $10. It would be awesome to include a letter/note 💌  and cheer for them on the sideline. You can refer to the Secret Sister spreadsheet on FRISBEE 🥏 LINKS🔗  to see what snacks/drinks 🥂  your tourney buddy would like. See you tomorrow!!\n ${link}`
 
   return (
     <div>

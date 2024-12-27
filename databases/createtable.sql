@@ -1,7 +1,8 @@
 -- Create the tournament table
 CREATE TABLE IF NOT EXISTS tournament (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
+    name VARCHAR(100) NOT NULL, 
+    year INT NOT NULL
 );
 
 -- Create the person table
