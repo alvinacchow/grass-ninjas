@@ -56,18 +56,18 @@ export default function Navbar({ tournaments }) {
               isOpen ? "h-auto" : "h-0"
             }`}
           >
-            <ul>
-              {tournaments.map((tournament) => (
-                <li key={tournament.id} className="py-2">
-                  <a
-                    href={`/tournament/${tournament.id}`}
-                    className="hover:text-blue-400"
-                  >
-                    {tournament.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          <ul>
+            {tournaments.map((tournament) => (
+              <li key={tournament.id} className="py-2">
+                <a
+                  href={`/tournamentPage/${tournament.id}`} 
+                  className="hover:text-blue-400"
+                >
+                  {tournament.name}
+                </a>
+              </li>
+            ))}
+          </ul>
           </div>
         </div>
       </div>
