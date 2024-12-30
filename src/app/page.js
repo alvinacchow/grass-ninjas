@@ -3,7 +3,7 @@ import Image from "next/image";
 
 // Fetch tournaments on the server side
 async function fetchTournaments() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tournaments`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tournament`, {
     cache: "no-store",
   });
   if (!response.ok) {

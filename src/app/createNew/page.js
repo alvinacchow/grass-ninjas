@@ -1,12 +1,18 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react';
 import Sortable from 'sortablejs';
+import { useRouter } from "next/navigation";
 
 const createNew = () => {
   const [people, setPeople] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pendingChanges, setPendingChanges] = useState(new Map());
+  const router = useRouter();
+  
+  const previewSend = () => {
+    router.push("/previewSend");
+  }
 
   const fetchPeople = useCallback(async () => {
     try {
@@ -110,7 +116,7 @@ const createNew = () => {
             </ul>
           </div>
 
-          {/* Right Section: Pairings and Input */}
+          {/* Pairings */}
           <div className="flex-1 flex">
             {/* Pairings Section */}
             <div className="w-1/2 p-5">
@@ -142,6 +148,13 @@ const createNew = () => {
                 placeholder="Type something..."
                 defaultValue={defaultMessage}
               />
+
+              <button
+                className="flex bg-blue-500 text-white px-4 py-2 text-sm rounded mb-4 hover:bg-blue-600 ml-auto"
+                onClick={previewSend}
+              >
+                Preview Send
+              </button>
             </div>
 
           </div>
