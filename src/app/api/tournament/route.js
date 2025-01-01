@@ -15,7 +15,6 @@ const pool = new Pool({
 
 export async function GET() {
   try {
-    console.log("this file instead");
     const result = await pool.query(
       'SELECT id, name FROM tournament ORDER BY id ASC;'
     );

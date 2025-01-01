@@ -2,8 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-// import dotenv from 'dotenv';
-// dotenv.config();
+
 
 const TournamentDetail = () => {
   const [tournament, setTournament] = useState(null);

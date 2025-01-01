@@ -1,18 +1,20 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react';
 import Sortable from 'sortablejs';
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const createNew = () => {
   const [people, setPeople] = useState([]);
+  const [order, setOrder] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pendingChanges, setPendingChanges] = useState(new Map());
+
+  const link = process.env.NEXT_PUBLIC_SHEET_24_25;
+  const defaultMessage = `GOOD AFTERNOON [PLAYER_1]!! 💕 Hope you are pumped for the tourney!! Your tournament buddy is [PLAYER_2]!!!🥳  Remember that the maximum limit to spend is $10. It would be awesome to include a letter/note 💌  and cheer for them on the sideline. You can refer to the Secret Sister spreadsheet on FRISBEE 🥏 LINKS🔗  to see what snacks/drinks 🥂  your tourney buddy would like. See you tomorrow!!\n ${link}`
+  const [message, setMessage] = useState(defaultMessage);
   const router = useRouter();
-  
-  const previewSend = () => {
-    router.push("/previewSend");
-  }
+  let sortableInstance = null;
 
   const fetchPeople = useCallback(async () => {
     try {
@@ -61,12 +63,12 @@ const createNew = () => {
   // Filtered people based on "included"
   const filteredPeople = people.filter(person => person.included);
   
-  
   useEffect(() => {
     if (filteredPeople.length > 0) {
       const list = document.getElementById('sortableList');
+      console.log("list:", list);
       if (list) {
-        new Sortable(list, {
+        sortableInstance = new Sortable(list, {
           group: 'shared',
           animation: 150,
         });
@@ -74,9 +76,44 @@ const createNew = () => {
     }
   }, [filteredPeople]);
 
-  const link = process.env.NEXT_PUBLIC_SHEET_24_25;
-  const defaultMessage = `GOOD AFTERNOON [PLAYER_1]!! 💕 Hope you are pumped for the tourney!! Your tournament buddy is [PLAYER_2]!!!🥳  Remember that the maximum limit to spend is $10. It would be awesome to include a letter/note 💌  and cheer for them on the sideline. You can refer to the Secret Sister spreadsheet on FRISBEE 🥏 LINKS🔗  to see what snacks/drinks 🥂  your tourney buddy would like. See you tomorrow!!\n ${link}`
+  const previewSend = () => {
+    // Get the current sorted order of IDs
+    const newOrderIds = sortableInstance?.toArray() || []; 
 
+    // Map the sorted `id`s back to the original objects
+    const sortedPeople = newOrderIds.map((id) =>
+      filteredPeople.find((person) => person.id.toString() === id)
+    );
+
+    // Create pairings from the sorted people
+    const pairedPeople = [];
+    for (let i = 0; i < sortedPeople.length; i += 2) {
+      const pair = sortedPeople.slice(i, i + 2);
+      pairedPeople.push(pair);
+    }
+
+    // Save pairings and message to sessionStorage
+    sessionStorage.setItem('pairings', JSON.stringify(pairedPeople));
+    sessionStorage.setItem('message', message);
+
+    // Navigate to the preview page
+    router.push('/previewSend');
+  };
+
+  const handleMessageChange = (event) => {
+    const newMessage = event.target.value;
+    setMessage(newMessage); // Update the state with the new message
+    sessionStorage.setItem('message', newMessage); // Store the updated message in sessionStorage
+  };
+
+  useEffect(() => {
+    // Retrieve the message from sessionStorage
+    const savedMessage = sessionStorage.getItem('message');
+    if (savedMessage) {
+      setMessage(savedMessage); // If there's a saved message, set it in state
+    }
+  }, []);
+  
   return (
     <div>
       <div className="p-5 mb-5 flex-col items-center text-center">
@@ -125,6 +162,7 @@ const createNew = () => {
                 {filteredPeople.map((person) => (
                   <li
                     key={person.id}
+                    data-id={person.id.toString()}
                     className="sortable-item text-sm inline-flex items-center justify-between w-full p-2 text-gray-500 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
                     <span>{person.name}</span>
@@ -146,9 +184,9 @@ const createNew = () => {
                 rows="20"
                 className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
                 placeholder="Type something..."
-                defaultValue={defaultMessage}
+                value={message}
+                onChange={handleMessageChange}
               />
-
               <button
                 className="flex bg-blue-500 text-white px-4 py-2 text-sm rounded mb-4 hover:bg-blue-600 ml-auto"
                 onClick={previewSend}
