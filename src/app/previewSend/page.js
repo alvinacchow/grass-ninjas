@@ -85,66 +85,154 @@ const PreviewSendPage = () => {
           </thead>
           <tbody>
             {pairings.length > 0 ? (
-              pairings.map((pair, index) => {
-                const isThreesome = pair.length === 3; // Check if this pairing has three people
+            pairings.map((pair, index) => {
+              const isThreesome = pair.length === 3; // Check if this pairing has three people
+              return [
+                // First Row for Pairing
+                <tr key={`pair-${index}`} className="border-b border-gray-200">
+                  <td className="p-2 items-right">
+                    <p>{pair[0]?.name || ''}</p>
+                    <button id={`copy-button-${index}-0`}
+                      onClick={() => {
+                        const textArea = document.getElementById(`textarea-${index}-0`);
+                        const button = document.getElementById(`copy-button-${index}-0`);
+                    
+                        if (textArea && button) {
+                          // Copy the text to clipboard
+                          navigator.clipboard.writeText(textArea.value);
+                    
+                          // Add 'opacity-50' and 'cursor-not-allowed' to gray out the button
+                          button.classList.add('opacity-50');
+                    
+                          // Log for debugging purposes
+                          console.log('Button clicked. Grayed out.');
+                    
+                          // Remove grayed-out effect after 2 seconds
+                          setTimeout(() => {
+                            button.classList.remove('opacity-50');
+                          }, 2000);  // 2000ms (2 seconds)
+                        }
+                      }}
+                    >
+                      <img
+                        src="/copy.svg"
+                        alt="Copy"
+                        className="w-5 h-5 filter invert transition-transform transform group-hover:scale-110"
+                      />
+                    </button>
+                  </td>
+                  <td className="p-2">
+                    <textarea
+                      id={`textarea-${index}-0`} // Unique ID
+                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                      rows="6"
+                      value={pair[1] ? getPersonalizedMessage(pair, 0, 1) : ''}
+                      readOnly
+                    />
+                  </td>
+                  <td className="p-2">
+                    <p>{pair[1]?.name || ''}</p>
+                    <button id={`copy-button-${index}-1`}
+                      onClick={() => {
+                        const textArea = document.getElementById(`textarea-${index}-1`);
+                        const button = document.getElementById(`copy-button-${index}-1`);
+                    
+                        if (textArea && button) {
+                          // Copy the text to clipboard
+                          navigator.clipboard.writeText(textArea.value);
+                    
+                          // Add 'opacity-50' and 'cursor-not-allowed' to gray out the button
+                          button.classList.add('opacity-50');
+                    
+                          // Log for debugging purposes
+                          console.log('Button clicked. Grayed out.');
+                    
+                          // Remove grayed-out effect after 2 seconds
+                          setTimeout(() => {
+                            button.classList.remove('opacity-50');
+                          }, 2000);  // 2000ms (2 seconds)
+                        }
+                      }}
+                    >
+                      <img
+                        src="/copy.svg"
+                        alt="Copy"
+                        className="w-5 h-5 filter invert transition-transform transform group-hover:scale-110"
+                      />
+                    </button>
+                  </td>
+                  <td className="p-2">
+                    <textarea
+                      id={`textarea-${index}-1`} // Unique ID for the second textarea
+                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                      rows="6"
+                      value={pair[1] ? getPersonalizedMessage(pair, 1, 0) : ''}
+                      readOnly
+                    />
+                  </td>
+                </tr>,
 
-                return [
-                  // First Row for Pairing
-                  <tr key={`pair-${index}`} className="border-b border-gray-200">
+                // Second Row for Third Person if it’s a threesome
+                isThreesome && (
+                  <tr key={`third-${index}`} className="border-b border-gray-200">
                     <td className="p-2">
-                      <p>{pair[0]?.name || ''}</p>
+                      <p>{pair[2]?.name || ''}</p>
+                      <button id={`copy-button-${index}-2`}
+                      onClick={() => {
+                        const textArea = document.getElementById(`textarea-${index}-2`);
+                        const button = document.getElementById(`copy-button-${index}-2`);
+                    
+                        if (textArea && button) {
+                          // Copy the text to clipboard
+                          navigator.clipboard.writeText(textArea.value);
+                    
+                          // Add 'opacity-50' and 'cursor-not-allowed' to gray out the button
+                          button.classList.add('opacity-50');
+                    
+                          // Log for debugging purposes
+                          console.log('Button clicked. Grayed out.');
+                    
+                          // Remove grayed-out effect after 2 seconds
+                          setTimeout(() => {
+                            button.classList.remove('opacity-50');
+                          }, 2000);  // 2000ms (2 seconds)
+                        }
+                      }}
+                    >
+                      <img
+                        src="/copy.svg"
+                        alt="Copy"
+                        className="w-5 h-5 filter invert transition-transform transform group-hover:scale-110"
+                      />
+                    </button>
                     </td>
-                    <td className="p-2">
+                    <td colSpan="3" className="p-2">
                       <textarea
-                        className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                        id={`textarea-${index}-2`} // Unique ID for the third person
+                        className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-yellow-200 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-yellow-500"
                         rows="6"
-                        value={pair[1] ? getPersonalizedMessage(pair, 0, 1) : ''}
+                        value={
+                          pair[2]
+                            ? `${getPersonalizedMessage(pair, 2, 0)}`
+                            : ''
+                        }
                         readOnly
                       />
                     </td>
-                    <td className="p-2">
-                      <p>{pair[1]?.name || ''}</p>
-                    </td>
-                    <td className="p-2">
-                      <textarea
-                        className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
-                        rows="6"
-                        value={pair[1] ? getPersonalizedMessage(pair, 1, 0) : ''}
-                        readOnly
-                      />
-                    </td>
-                  </tr>,
+                  </tr>
+                ),
+              ];
+            })
+          ) : (
+            <tr>
+              <td colSpan="4" className="p-2 text-center">
+                No pairings available.
+              </td>
+            </tr>
+          )}
+        </tbody>
 
-                  // Second Row for Third Person if it’s a threesome
-                  isThreesome && (
-                    <tr key={`third-${index}`} className="border-b border-gray-200">
-                      <td className="p-2">
-                        <p>{pair[2]?.name || ''}</p>
-                      </td>
-                      <td colSpan="3" className="p-2">
-                        <textarea
-                          className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-yellow-200 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-yellow-500"
-                          rows="6"
-                          value={
-                            pair[2]
-                              ? `${getPersonalizedMessage(pair, 2, 0)}`
-                              : ''
-                          }
-                          readOnly
-                        />
-                      </td>
-                    </tr>
-                  ),
-                ];
-              })
-            ) : (
-              <tr>
-                <td colSpan="4" className="p-2 text-center">
-                  No pairings available.
-                </td>
-              </tr>
-            )}
-          </tbody>
+
         </table>
       </div>
     </div>
