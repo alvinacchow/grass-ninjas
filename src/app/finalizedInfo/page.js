@@ -1,30 +1,35 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useRouter } from "next/navigation";
 
-const PreviewSendPage = () => {
-  const [pairings, setPairings] = useState([]);
-  const [message, setMessage] = useState('');
-  const [personalizedMessages, setPersonalizedMessages] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const closeModal = () => setShowModal(false);
-  const openModal = () => setShowModal(true);
-  const router = useRouter();
+const FinalizedInfoPage = () => {
+    const [pairings, setPairings] = useState([]);
+    const [message, setMessage] = useState('');
+    const [name, setName] = useState('');
+    const [year, setYear] = useState('');
 
-  useEffect(() => {
-    // Retrieve data from sessionStorage
-    const storedPairings = sessionStorage.getItem('pairings');
-    const storedMessage = sessionStorage.getItem('message');
+    useEffect(() => {
+        // Retrieve data from sessionStorage
+        const storedPairings = sessionStorage.getItem('pairings');
+        const storedMessage = sessionStorage.getItem('message');
+        const storedName = sessionStorage.getItem('name');
+        const storedYear = sessionStorage.getItem('year');
+    
+        if (storedPairings) {
+          setPairings(JSON.parse(storedPairings));
+        }
+    
+        if (storedMessage) {
+            setMessage(storedMessage);
+        }
 
-    if (storedPairings) {
-      setPairings(JSON.parse(storedPairings));
-    }
+        if (storedName) {
+            setName(storedName);
+        }
 
-    if (storedMessage) {
-      setMessage(storedMessage);
-    }
-  }, []);
+        if (storedYear) {
+            setYear(storedYear);
+        }
+      }, []);
 
   // Function to replace placeholders in the message
   const getPersonalizedMessage = (pair, fromPlayerIndex, toPlayerIndex) => {
@@ -48,163 +53,17 @@ const PreviewSendPage = () => {
     return personalizedMessage;
   };
 
-  const showWarning = () => {
-    setShowAlert(true); 
-  };
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent form default behavior
-
-    // Gather form data
-    const formData = new FormData(event.target);
-    const name = formData.get('name');
-    const year = formData.get('year');
-    sessionStorage.setItem('name', name);
-    sessionStorage.setItem('year', year);
-
-    // Debugging log to see the form data
-    console.log('Form Data:', { name, year });
-
-    // Make sure the pathname is a valid string, not undefined or null
-    router.push('/finalizedInfo');
-  };
-
-
   return (
+    
     <div>
-      {/* Modal */}
-      {showModal && (
-        <div
-          id="authentication-modal"
-          tabIndex="-1"
-          className={`modal-container fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full flex ${
-            showModal ? 'backdrop-blur-sm' : ''
-          }`} 
-          onClick={closeModal} 
-        >
-   
-          <div 
-            className="relative p-4 w-full max-w-md max-h-full"
-            onClick={(e) => e.stopPropagation()}>
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  Enter Information
-                </h3>
-                <button
-                  type="button"
-                  className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={closeModal}
-                >
-                  <svg
-                    className="w-3 h-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                    />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
-                </button>
-              </div>
-              <div className="p-4 md:p-5">
-                <form className="space-y-4" onSubmit={handleSubmit}>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Tournament Name
-                    </label>
-                    <input
-                      name="name"
-                      id="name"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      placeholder="Irvine Open"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="password"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Year
-                    </label>
-                    <input
-                      type="number"
-                      min="2020"
-                      name="year"
-                      id="year"
-                      placeholder="2024"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      required
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    Submit All
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
+        <div className="p-5 flex items-center justify-between">
+            <a href="/" className="flex-shrink-0">
+            <img src="logo.svg" alt="Home" className="w-20 h-20" />
+            </a>
+            <h1 className="text-xl font-bold text-center flex-grow">
+                {name} {year}
+            </h1>
         </div>
-      )}
-
-      {/* Alert */}
-      <div className="p-5 flex items-center justify-between">
-        <a href="/" className="flex-shrink-0">
-          <img src="logo.svg" alt="Home" className="w-20 h-20" />
-        </a>
-        <h1 className="text-xl font-bold text-center flex-grow">
-          Preview Message
-        </h1>
-        <button
-          className="px-4 py-2 bg-blue-500 text-white rounded"
-          onClick={showWarning}
-        >
-          Finalize and Save
-        </button>
-      </div>
-
-      {showAlert && (
-        <div id="alert-additional-content-3" className="p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
-        <div className="flex items-center">
-          <svg className="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-          </svg>
-          <span className="sr-only">Info</span>
-          <h3 className="text-lg font-medium">This is a warning alert</h3>
-        </div>
-        <div className="mt-2 mb-4 text-sm">
-          Are you sure you would like to finalize everything? Changes cannot be made after you proceed. 
-        </div>
-        <div className="flex">
-        <button 
-          type="button"
-          className="text-green-800 bg-transparent border border-green-800 hover:bg-green-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-green-600 dark:border-green-600 dark:text-green-400 dark:hover:text-white dark:focus:ring-green-800" 
-          data-modal-target="authentication-modal" 
-          data-modal-toggle="authentication-modal"
-          aria-label="Open Modal"
-          onClick={openModal}
-        >
-            Finalize
-        </button>
-        </div>
-      </div>
-      )}
-      
       {/* Table htmlFor displaying pairings and personalized messages */}
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto border-collapse border border-gray-200">
@@ -231,16 +90,9 @@ const PreviewSendPage = () => {
                         const button = document.getElementById(`copy-button-${index}-0`);
                     
                         if (textArea && button) {
-                          // Copy the text to clipboard
                           navigator.clipboard.writeText(textArea.value);
-                    
-                          // Add 'opacity-50' and 'cursor-not-allowed' to gray out the button
                           button.classList.add('opacity-50');
-                    
-                          // Log htmlFor debugging purposes
                           console.log('Button clicked. Grayed out.');
-                    
-                          // Remove grayed-out effect after 2 seconds
                           setTimeout(() => {
                             button.classList.remove('opacity-50');
                           }, 2000);  // 2000ms (2 seconds)
@@ -372,4 +224,4 @@ const PreviewSendPage = () => {
   );
 };
 
-export default PreviewSendPage;
+export default FinalizedInfoPage;

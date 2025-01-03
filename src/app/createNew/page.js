@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react';
 import Sortable from 'sortablejs';
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const createNew = () => {
   const [people, setPeople] = useState([]);

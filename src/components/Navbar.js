@@ -63,7 +63,7 @@ export default function Navbar({ tournaments }) {
                   href={`/tournamentPage/${tournament.id}`} 
                   className="hover:text-blue-400"
                 >
-                  {tournament.name}
+                  {tournament.name} {tournament.year}
                 </a>
               </li>
             ))}

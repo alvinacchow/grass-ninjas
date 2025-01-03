@@ -16,7 +16,7 @@ const pool = new Pool({
 export async function GET() {
   try {
     const result = await pool.query(
-      'SELECT id, name FROM tournament ORDER BY id ASC;'
+      'SELECT id, name, year FROM tournament ORDER BY id ASC;'
     );
     return NextResponse.json(result.rows);
   } catch (error) {

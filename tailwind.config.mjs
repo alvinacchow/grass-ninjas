@@ -20,8 +20,10 @@ export default {
           '50%': { transform: 'scale(1.2)' },       
         },
       },
+      backdropBlur: {
+        '5xl': '15px', // You can adjust or add more values if needed
+      },
     },
   },
   plugins: [],
-  
 };
