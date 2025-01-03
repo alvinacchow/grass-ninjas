@@ -44,6 +44,7 @@ const createNew = () => {
   useEffect(() => {
     fetchPeople();
   }, [fetchPeople]);
+  
 
   const togglePerson = (personId) => {
     setPeople((prevPeople) =>
@@ -78,24 +79,39 @@ const createNew = () => {
 
   const previewSend = () => {
     // Get the current sorted order of IDs
-    const newOrderIds = sortableInstance?.toArray() || []; 
-
+    const newOrderIds = sortableInstance?.toArray() || [];
+  
     // Map the sorted `id`s back to the original objects
     const sortedPeople = newOrderIds.map((id) =>
       filteredPeople.find((person) => person.id.toString() === id)
     );
-
-    // Create pairings from the sorted people
+  
     const pairedPeople = [];
-    for (let i = 0; i < sortedPeople.length; i += 2) {
+    let i = 0;
+  
+    // Pair people in twos until there are three left
+    for (; i < sortedPeople.length - 3; i += 2) {
       const pair = sortedPeople.slice(i, i + 2);
       pairedPeople.push(pair);
     }
-
+  
+    // Handle the last three people as a triangular pairing
+    if (sortedPeople.length - i === 3) {
+      const trio = sortedPeople.slice(i);
+      pairedPeople.push([
+        { ...trio[0], buddy: trio[1].name },
+        { ...trio[1], buddy: trio[2].name },
+        { ...trio[2], buddy: trio[0].name },
+      ]);
+    } else {
+      // Add the remaining pair if there are only two people left
+      pairedPeople.push(sortedPeople.slice(i));
+    }
+  
     // Save pairings and message to sessionStorage
     sessionStorage.setItem('pairings', JSON.stringify(pairedPeople));
     sessionStorage.setItem('message', message);
-
+  
     // Navigate to the preview page
     router.push('/previewSend');
   };

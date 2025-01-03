@@ -7,7 +7,6 @@ const PreviewSendPage = () => {
   const [personalizedMessages, setPersonalizedMessages] = useState([]);
 
   useEffect(() => {
-    console.log("reached");
     // Retrieve data from sessionStorage
     const storedPairings = sessionStorage.getItem('pairings');
     const storedMessage = sessionStorage.getItem('message');
@@ -19,7 +18,6 @@ const PreviewSendPage = () => {
     if (storedMessage) {
       setMessage(storedMessage);
     }
-    console.log("pairings from storage", storedPairings);
   }, []);
 
   // Function to replace placeholders in the message
@@ -87,46 +85,66 @@ const PreviewSendPage = () => {
           </thead>
           <tbody>
             {pairings.length > 0 ? (
-              pairings.map((pair, index) => (
-                <tr key={index} className="border-b border-gray-200">
-                  <td className="p-2">
-                    {/* Only show the first player in the Send From column */}
-                    <p>{pair[0]?.name}</p>
-                  </td>
-                  <td className="p-2">
-                    <textarea
-                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
-                      rows="6"
-                      value={getPersonalizedMessage(pair, 0, 1)} // A to B
-                      onChange={(e) => {
-                        // Handle message change if needed
-                      }}
-                    />
-                  </td>
-                  <td className="p-2">
-                    {/* Only show the first player in the Send From column */}
-                    <p>{pair[1]?.name}</p>
-                  </td>
-                  <td className="p-2">
-                    <textarea
-                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
-                      rows="6"
-                      value={pair[1] ? getPersonalizedMessage(pair, 1, 0) : ''} // B to A
-                      onChange={(e) => {
-                        // Handle message change if needed
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))
+              pairings.map((pair, index) => {
+                const isThreesome = pair.length === 3; // Check if this pairing has three people
+
+                return [
+                  // First Row for Pairing
+                  <tr key={`pair-${index}`} className="border-b border-gray-200">
+                    <td className="p-2">
+                      <p>{pair[0]?.name || ''}</p>
+                    </td>
+                    <td className="p-2">
+                      <textarea
+                        className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                        rows="6"
+                        value={pair[1] ? getPersonalizedMessage(pair, 0, 1) : ''}
+                        readOnly
+                      />
+                    </td>
+                    <td className="p-2">
+                      <p>{pair[1]?.name || ''}</p>
+                    </td>
+                    <td className="p-2">
+                      <textarea
+                        className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                        rows="6"
+                        value={pair[1] ? getPersonalizedMessage(pair, 1, 0) : ''}
+                        readOnly
+                      />
+                    </td>
+                  </tr>,
+
+                  // Second Row for Third Person if it’s a threesome
+                  isThreesome && (
+                    <tr key={`third-${index}`} className="border-b border-gray-200">
+                      <td className="p-2">
+                        <p>{pair[2]?.name || ''}</p>
+                      </td>
+                      <td colSpan="3" className="p-2">
+                        <textarea
+                          className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-yellow-200 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-yellow-500"
+                          rows="6"
+                          value={
+                            pair[2]
+                              ? `${getPersonalizedMessage(pair, 2, 0)}`
+                              : ''
+                          }
+                          readOnly
+                        />
+                      </td>
+                    </tr>
+                  ),
+                ];
+              })
             ) : (
               <tr>
-                <td colSpan="4" className="p-2 text-center">No pairings available.</td>
+                <td colSpan="4" className="p-2 text-center">
+                  No pairings available.
+                </td>
               </tr>
             )}
           </tbody>
-
-        
         </table>
       </div>
     </div>
