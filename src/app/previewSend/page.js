@@ -63,11 +63,33 @@ const PreviewSendPage = () => {
     sessionStorage.setItem('name', name);
     sessionStorage.setItem('year', year);
 
-    // Debugging log to see the form data
-    console.log('Form Data:', { name, year });
+    const dataToSend = {
+      name,
+      year,
+      pairings,
+    };
 
-    // Make sure the pathname is a valid string, not undefined or null
-    router.push('/finalizedInfo');
+    try {
+      console.log("Data being sent:", JSON.stringify(dataToSend, null, 2)); // Pretty print JSON
+
+      const response = await fetch('/api/pairings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+  
+      // Handle the response
+      if (response.ok) {
+        console.log('Pairings submitted successfully');
+        router.push('/finalizedInfo'); 
+      } else {
+        console.error('Error submitting pairings');
+      }
+    } catch (error) {
+      console.error('Error submitting pairings:', error);
+    }
   };
 
 
