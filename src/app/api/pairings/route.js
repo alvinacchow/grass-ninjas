@@ -45,28 +45,35 @@ export async function POST(request) {
     // Create a list of queries for each pair in the pairings array
     const pairingPromises = pairings.map(pair => {
         if (pair.length === 2) {
-            return pool.query(query2, [tournamentId, pair[0].id, pair[1].id])
-            .then(res => {
-              console.log('Pair inserted:', res.rows[0]);
-            })
-            .catch(error => {
-              console.error('Error inserting pair:', pair, error);
-            });
+          return [
+            pool.query(query2, [tournamentId, pair[0].id, pair[1].id])
+              .then(res => console.log('Pair A--B inserted:', res.rows[0]))
+              .catch(error => console.error('Error inserting pair A--B:', pair, error)),
+            pool.query(query2, [tournamentId, pair[1].id, pair[0].id])
+              .then(res => console.log('Pair B--A inserted:', res.rows[0]))
+              .catch(error => console.error('Error inserting pair B--A:', pair, error)),
+          ];
         }
+      
         if (pair.length === 3) {
-            return [
-                pool.query(query2, [tournamentId, pair[0].id, pair[1].id])
-                  .then(res => console.log('Pairing A--B inserted:', res.rows[0]))
-                  .catch(error => console.error('Error inserting pairing A--B:', pair, error)),
-                pool.query(query2, [tournamentId, pair[1].id, pair[2].id])
-                  .then(res => console.log('Pairing B--C inserted:', res.rows[0]))
-                  .catch(error => console.error('Error inserting pairing B--C:', pair, error)),
-                pool.query(query2, [tournamentId, pair[2].id, pair[0].id])
-                  .then(res => console.log('Pairing C--A inserted:', res.rows[0]))
-                  .catch(error => console.error('Error inserting pairing C--A:', pair, error)),
-              ];
+          return [
+            pool.query(query2, [tournamentId, pair[0].id, pair[1].id])
+              .then(res => console.log('Pairing A--B inserted:', res.rows[0]))
+              .catch(error => console.error('Error inserting pairing A--B:', pair, error)),
+            
+            pool.query(query2, [tournamentId, pair[1].id, pair[2].id])
+              .then(res => console.log('Pairing B--C inserted:', res.rows[0]))
+              .catch(error => console.error('Error inserting pairing B--C:', pair, error)),
+            
+      
+            pool.query(query2, [tournamentId, pair[2].id, pair[0].id])
+              .then(res => console.log('Pairing C--A inserted:', res.rows[0]))
+              .catch(error => console.error('Error inserting pairing C--A:', pair, error)),
+            
+          ];
         }
       }).flat();
+      
       
 
     // Execute all the pairing insertions concurrently

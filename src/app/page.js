@@ -36,9 +36,35 @@ export default async function Home() {
 
       {/* Main content area */}
       <div className="flex-1 p-8">
-        <h1>Welcome to the Grass Ninjas site!</h1>
-        {/* Your content */}
+        <div className="w-full p-3 my-3 bg-gray-800 rounded-lg resize-none focus:outline-none">
+          <h1 className="text-left text-xl p-2 text-green-500" style={{ fontWeight: 'bold' }}>To Get Started</h1>
+        </div>
+  
+        <div className="w-full p-5 text-left my-3 bg-gray-800 rounded-lg resize-none focus:outline-none">
+          <p className="py-2 text-sm">
+            To start the buddy pairing process for a new tournament, use the <span className="text-green-500">Create New Event</span> button located on the left side of the interface. Clicking this button initiates the setup for a new event and automatically includes players from the default roster. These pre-selected players are those who typically attend every tournament, streamlining the setup process.
+            For more details about configuring the default roster, refer to the <span className="text-green-500">Set Default Roster</span> section.
+          </p>
+        </div>
+
+        <div className="w-full p-5 text-left my-3 bg-gray-800 rounded-lg resize-none focus:outline-none">
+          <p className="py-2 text-sm">
+            The <span className="text-green-500">Set Default Roster</span> page allows you to configure a default roster, which should simplify the pairing process by pre-selecting players who consistently attend every tournament. When setting the default roster, you can identify and toggle these reliable attendees in advance. Once set, these players will automatically be included in the roster for each tournament, saving time and reducing the need for manual selections.
+            By having certain players pre-toggled, the system ensures a more efficient and seamless pairing experience while maintaining flexibility for adjustments as needed.
+          </p>
+        </div>
+
+        <div className="w-full p-5 text-left my-3 bg-gray-800 rounded-lg resize-none focus:outline-none">
+          <p className="py-2 text-sm">
+          The <span className="text-green-500">History</span> menu provides an overview of previous tournaments. By expanding the menu, you can see a list of past tournaments. Selecting a specific tournament from the list will navigate you to its dedicated page, where you can view detailed information, including the buddy pairings for that tournament.
+          This feature helps you quickly reference past tournaments and their pairings, making it easy to review or analyze historical data.
+
+
+          </p>
+        </div>
+        
       </div>
     </div>
+    
   );
 }

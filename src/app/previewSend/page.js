@@ -114,6 +114,7 @@ const PreviewSendPage = () => {
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                   Enter Information
                 </h3>
+                
                 <button
                   type="button"
                   className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -136,8 +137,12 @@ const PreviewSendPage = () => {
                   </svg>
                   <span className="sr-only">Close modal</span>
                 </button>
+                
               </div>
               <div className="p-4 md:p-5">
+                <p className="pb-2">
+                  <span className="text-green-500">Are you sure? Pairings will be submitted to the database and cannot be changed.</span>
+                </p>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                   <div>
                     <label
@@ -186,47 +191,29 @@ const PreviewSendPage = () => {
       )}
 
       {/* Alert */}
-      <div className="p-5 flex items-center justify-between">
-        <a href="/" className="flex-shrink-0">
-          <img src="logo.svg" alt="Home" className="w-20 h-20" />
-        </a>
-        <h1 className="text-xl font-bold text-center flex-grow">
-          Preview Message
-        </h1>
-        <button
-          className="flex bg-green-600 text-white px-4 py-2 rounded mb-4 hover:bg-green-700"
-          onClick={showWarning}
-        >
-          Finalize and Save
-        </button>
+      <div className="p-5 relative">
+        <div className="flex items-center justify-between w-full">
+          <a href="/" className="top-5 left-5">
+            <img src="logo.svg" alt="Home" className="w-20 h-20" />
+          </a>
+          <h1 className="text-xl text-gray-900 dark:text-white">
+            Preview Messages
+          </h1>
+          <button
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 ml-4"
+            onClick={openModal}
+          >
+            Finalize and Save
+          </button>
+        </div>
+
+        <div className="p-5 text-left bg-gray-800 rounded-lg resize-none focus:outline-none mt-10 w-full">
+          <p className="text-sm mb-2">
+            The table below shows all pairings and their respective personalized messages. If you are satisifed with these pairings, press the <span className="text-green-500">Finalize and Save</span> button. Finally, enter the tournament name and year.
+          </p>
+        </div>
       </div>
 
-      {showAlert && (
-        <div id="alert-additional-content-3" className="p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
-        <div className="flex items-center">
-          <svg className="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-          </svg>
-          <span className="sr-only">Info</span>
-          <h3 className="text-lg font-medium">This is a warning alert</h3>
-        </div>
-        <div className="mt-2 mb-4 text-sm">
-          Are you sure you would like to finalize everything? Changes cannot be made after you proceed. 
-        </div>
-        <div className="flex">
-        <button 
-          type="button"
-          className="text-green-800 bg-transparent border border-green-800 hover:bg-green-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-green-600 dark:border-green-600 dark:text-green-400 dark:hover:text-white dark:focus:ring-green-800" 
-          data-modal-target="authentication-modal" 
-          data-modal-toggle="authentication-modal"
-          aria-label="Open Modal"
-          onClick={openModal}
-        >
-            Finalize
-        </button>
-        </div>
-      </div>
-      )}
       
       {/* Table htmlFor displaying pairings and personalized messages */}
       <div className="overflow-x-auto">

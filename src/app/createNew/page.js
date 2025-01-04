@@ -132,13 +132,23 @@ const createNew = () => {
   
   return (
     <div>
-      <div className="p-5 mb-5 flex-col items-center text-center">
+      <div className="p-5 flex-col items-center text-center relative">
         <a href="/" className="absolute top-5 left-5">
           <img src="logo.svg" alt="Home" className="w-20 h-20" />
         </a>
-        <h1 className="mb-5 text-xl text-gray-900 dark:text-white text-center">
+        <h1 className="mt-5 text-xl text-gray-900 dark:text-white text-center">
           Create New Event
         </h1>
+         <div className="p-5 text-left bg-gray-800 rounded-lg resize-none focus:outline-none my-10">
+          <p className="text-sm mb-3">
+            The left sidebar allows adding players beyond the default roster, while the center menu enables drag-and-drop pairing of players. If there is an odd number of players, the last three are placed in a triangular pairing (A-B), (B-C), (C-A). 
+            The right side is used to create default messages with placeholders like <span className="bg-gray-600">[PLAYER_1]</span> and <span className="bg-gray-600">[PLAYER_2]</span> to refer to players on the left and right of a pairing.
+          </p>
+          
+          <p className="text-sm">
+            <span className="font-bold">NOTE:</span> It is important to finalize the message and all pairings before clicking the <span className="text-green-500">Preview Messages</span> button, as navigating back afterwards will reset the roster and pairings.
+          </p>
+        </div>
 
         {/* Horizontal Layout */}
         <div className="my-16 flex">
