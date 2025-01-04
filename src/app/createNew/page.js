@@ -19,7 +19,8 @@ const createNew = () => {
   const fetchPeople = useCallback(async () => {
     try {
       setError(null);
-      const response = await fetch('/api/roster');
+      // const response = await fetch('/api/roster');
+      const response = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/roster`;
       if (!response.ok) throw new Error('Failed to fetch roster');
       
       const data = await response.json();
@@ -204,10 +205,10 @@ const createNew = () => {
                 onChange={handleMessageChange}
               />
              <button
-              className="flex bg-green-600 text-white px-4 py-2 text-sm rounded mb-4 hover:bg-green-600 ml-auto"
+              className="flex bg-green-600 text-white px-4 py-2 text-sm rounded mb-4 hover:bg-green-700 ml-auto"
               onClick={previewSend}
             >
-              Preview Send
+              Preview Messages
             </button>
             </div>
 

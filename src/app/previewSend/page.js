@@ -72,7 +72,7 @@ const PreviewSendPage = () => {
     try {
       console.log("Data being sent:", JSON.stringify(dataToSend, null, 2)); // Pretty print JSON
 
-      const response = await fetch('/api/pairings', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pairings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

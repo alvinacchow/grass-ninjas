@@ -15,7 +15,7 @@ const TournamentDetail = () => {
 
     const fetchTournament = async () => {
       try {
-        const response = await fetch(`/api/tournaments/${id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tournaments/${id}`);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.statusText}`);

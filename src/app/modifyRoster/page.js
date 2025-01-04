@@ -12,7 +12,8 @@ const ModifyRoster = () => {
   const fetchPeople = useCallback(async () => {
     try {
       setError(null);
-      const response = await fetch('/api/roster');
+      // const response = await fetch('/api/roster');
+      const response = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/roster`;
       if (!response.ok) throw new Error('Failed to fetch roster');
       
       const data = await response.json();
@@ -45,7 +46,7 @@ const ModifyRoster = () => {
     try {
       const updates = Array.from(pendingChanges.values());
   
-      const response = await fetch('/api/roster', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/roster`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
