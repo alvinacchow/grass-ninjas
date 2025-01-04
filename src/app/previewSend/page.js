@@ -173,10 +173,11 @@ const PreviewSendPage = () => {
                   </div>
                   <button
                     type="submit"
-                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="w-full text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-800 dark:focus:ring-green-800"
                   >
                     Submit All
                   </button>
+
                 </form>
               </div>
             </div>
@@ -193,7 +194,7 @@ const PreviewSendPage = () => {
           Preview Message
         </h1>
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded"
+          className="flex bg-green-600 text-white px-4 py-2 rounded mb-4 hover:bg-green-700"
           onClick={showWarning}
         >
           Finalize and Save
@@ -231,11 +232,11 @@ const PreviewSendPage = () => {
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto border-collapse border border-gray-200">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="p-2 text-left text-gray-700">Send To</th>
-              <th className="p-2 text-left text-gray-700">Message</th>
-              <th className="p-2 text-left text-gray-700">Send To</th>
-              <th className="p-2 text-left text-gray-700">Message</th>
+            <tr className="bg-green-700 text-white dark:bg-green-600 dark:text-white border border-green-700">
+              <th className="p-2 text-left text-white">Send To</th>
+              <th className="p-2 text-left text-white">Message</th>
+              <th className="p-2 text-left text-white">Send To</th>
+              <th className="p-2 text-left text-white">Message</th>
             </tr>
           </thead>
           <tbody>
@@ -245,7 +246,7 @@ const PreviewSendPage = () => {
               return [
                 // First Row htmlFor Pairing
                 <tr key={`pair-${index}`} className="border-b border-gray-200">
-                  <td className="p-2 items-right">
+                  <td className="p-2 items-right border border-green-700">
                     <p>{pair[0]?.name || ''}</p>
                     <button id={`copy-button-${index}-0`}
                       onClick={() => {
@@ -276,16 +277,16 @@ const PreviewSendPage = () => {
                       />
                     </button>
                   </td>
-                  <td className="p-2">
+                  <td className="p-2 border border-green-700">
                     <textarea
                       id={`textarea-${index}-0`} // Unique ID
-                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-green-600 dark:focus:border-green-600"
                       rows="6"
                       value={pair[1] ? getPersonalizedMessage(pair, 0, 1) : ''}
                       readOnly
                     />
                   </td>
-                  <td className="p-2">
+                  <td className="p-2 border border-green-700">
                     <p>{pair[1]?.name || ''}</p>
                     <button id={`copy-button-${index}-1`}
                       onClick={() => {
@@ -316,10 +317,10 @@ const PreviewSendPage = () => {
                       />
                     </button>
                   </td>
-                  <td className="p-2">
+                  <td className="p-2 border border-green-700">
                     <textarea
                       id={`textarea-${index}-1`} // Unique ID htmlFor the second textarea
-                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-green-600 dark:focus:border-green-600"
                       rows="6"
                       value={pair[2] ? getPersonalizedMessage(pair, 1, 2) : getPersonalizedMessage(pair, 1, 0) }
                       readOnly
@@ -330,7 +331,7 @@ const PreviewSendPage = () => {
                 // Second Row htmlFor Third Person if it’s a threesome
                 isThreesome && (
                   <tr key={`third-${index}`} className="border-b border-gray-200">
-                    <td className="p-2">
+                    <td className="p-2 border border-green-700">
                       <p>{pair[2]?.name || ''}</p>
                       <button id={`copy-button-${index}-2`}
                       onClick={() => {
@@ -361,10 +362,10 @@ const PreviewSendPage = () => {
                       />
                     </button>
                     </td>
-                    <td colSpan="3" className="p-2">
+                    <td colSpan="3" className="p-2 border border-green-700">
                       <textarea
                         id={`textarea-${index}-2`} // Unique ID htmlFor the third person
-                        className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-yellow-200 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-yellow-500"
+                        className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-green-600 dark:focus:border-green-600"
                         rows="6"
                         value={
                           pair[2]
@@ -380,7 +381,7 @@ const PreviewSendPage = () => {
             })
           ) : (
             <tr>
-              <td colSpan="4" className="p-2 text-center">
+              <td colSpan="4" className="p-2 text-center border border-green-700">
                 No pairings available.
               </td>
             </tr>

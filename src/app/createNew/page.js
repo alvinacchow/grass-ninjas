@@ -153,7 +153,7 @@ const createNew = () => {
                       <input
                         type="checkbox"
                         id={`checkbox-${person.id}`}
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        className="w-4 h-4 appearance-none bg-green-600 rounded checked:bg-green-600 dark:bg-gray-600 dark:checked:bg-green-600"
                         checked={Boolean(person.included)}
                         onChange={() => togglePerson(person.id)}
                       />
@@ -179,7 +179,7 @@ const createNew = () => {
                   <li
                     key={person.id}
                     data-id={person.id.toString()}
-                    className="sortable-item text-sm inline-flex items-center justify-between w-full p-2 text-gray-500 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+                    className="sortable-item text-sm inline-flex items-center justify-between w-full p-2 text-gray-500 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-green-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
                     <span>{person.name}</span>
                     <div className="flex items-center">
@@ -198,17 +198,17 @@ const createNew = () => {
               <textarea
                 id="textarea"
                 rows="20"
-                className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-600 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-green-600"
                 placeholder="Type something..."
                 value={message}
                 onChange={handleMessageChange}
               />
-              <button
-                className="flex bg-blue-500 text-white px-4 py-2 text-sm rounded mb-4 hover:bg-blue-600 ml-auto"
-                onClick={previewSend}
-              >
-                Preview Send
-              </button>
+             <button
+              className="flex bg-green-600 text-white px-4 py-2 text-sm rounded mb-4 hover:bg-green-600 ml-auto"
+              onClick={previewSend}
+            >
+              Preview Send
+            </button>
             </div>
 
           </div>

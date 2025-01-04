@@ -103,7 +103,7 @@ const ModifyRoster = () => {
           Set Default Roster
         </h1>
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-green-600 text-white px-4 py-2 rounded mb-4 hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleSaveChanges}
           disabled={saving || pendingChanges.size === 0}
         >
@@ -133,7 +133,7 @@ const ModifyRoster = () => {
               />
               <label
                 htmlFor={`checkbox-${person.id}`}
-                className={`inline-flex flex-col items-center justify-center w-full p-5 text-gray-500 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700`}
+                className={`inline-flex flex-col items-center justify-center w-full p-5 text-gray-500 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-green-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700`}
               >
                 <div className="block text-center">
                   <div className="w-full text-lg font-semibold">

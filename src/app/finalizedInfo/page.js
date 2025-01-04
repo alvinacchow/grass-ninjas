@@ -109,7 +109,7 @@ const FinalizedInfoPage = () => {
                   <td className="p-2">
                     <textarea
                       id={`textarea-${index}-0`} // Unique ID
-                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-green-600 dark:focus:border-green-600"
                       rows="6"
                       value={pair[1] ? getPersonalizedMessage(pair, 0, 1) : ''}
                       readOnly
@@ -149,7 +149,7 @@ const FinalizedInfoPage = () => {
                   <td className="p-2">
                     <textarea
                       id={`textarea-${index}-1`} // Unique ID htmlFor the second textarea
-                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-blue-500"
+                      className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-green-600 dark:focus:border-green-600"
                       rows="6"
                       value={pair[2] ? getPersonalizedMessage(pair, 1, 2) : getPersonalizedMessage(pair, 1, 0) }
                       readOnly
@@ -194,7 +194,7 @@ const FinalizedInfoPage = () => {
                     <td colSpan="3" className="p-2">
                       <textarea
                         id={`textarea-${index}-2`} // Unique ID htmlFor the third person
-                        className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-yellow-200 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-yellow-500"
+                        className="w-full p-3 text-sm border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:ring-green-600 dark:focus:border-green-600"
                         rows="6"
                         value={
                           pair[2]

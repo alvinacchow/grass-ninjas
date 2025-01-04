@@ -20,7 +20,7 @@ export default function Navbar({ tournaments }) {
       <div className="w-64 bg-gray-800 text-white px-4 fixed left-0 h-full flex flex-col justify-between">
         <div>
           <div className="flex justify-center pb-3">
-            <button className="flex bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600"
+            <button className="flex bg-green-600 text-white px-4 py-2 rounded mb-4 hover:bg-green-700"
             onClick={handleCreateNew}>
               Create New Event
             </button>
@@ -29,7 +29,7 @@ export default function Navbar({ tournaments }) {
           <Link href="/modifyRoster">
             <button 
               className="flex justify-between w-full text-lg font-semibold py-2 hover:text-gray-400">
-              Modify Roster
+              Set Default Roster
             </button>
           </Link>
 
@@ -61,7 +61,7 @@ export default function Navbar({ tournaments }) {
               <li key={tournament.id} className="py-2">
                 <a
                   href={`/tournamentPage/${tournament.id}`} 
-                  className="hover:text-blue-400"
+                  className="hover:text-green-500"
                 >
                   {tournament.name} {tournament.year}
                 </a>
