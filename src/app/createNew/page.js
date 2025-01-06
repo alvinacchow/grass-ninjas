@@ -16,6 +16,72 @@ const createNew = () => {
   const router = useRouter();
   let sortableInstance = null;
 
+  const [pairingsHistory, setPairingsHistory] = useState({});
+  const [visibleHistories, setVisibleHistories] = useState(new Set());
+
+  
+  const fetchPairingsHistory = async (personId) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/history?person_id=${personId}`);
+      const pairings = await response.json();
+  
+      if (pairings.error) {
+        console.warn(`Error for person ID ${personId}: ${pairings.error}`);
+        setPairingsHistory((prev) => ({
+          ...prev,
+          [personId]: 'No history found.',
+        }));
+        return;
+      }
+  
+      if (pairings.message) {
+        console.warn(`Message for person ID ${personId}: ${pairings.message}`);
+        setPairingsHistory((prev) => ({
+          ...prev,
+          [personId]: 'No history found.',
+        }));
+        return;
+      }
+  
+      if (!Array.isArray(pairings) || pairings.length === 0) {
+        setPairingsHistory((prev) => ({
+          ...prev,
+          [personId]: 'No history found.',
+        }));
+        return;
+      }
+  
+      const pairingDetails = pairings.map((pairing) => pairing.paired_with_name).join(', ');
+      setPairingsHistory((prev) => ({
+        ...prev,
+        [personId]: pairingDetails,
+      }));
+    } catch (error) {
+      console.error(`Error fetching pairings history for person ID ${personId}:`, error);
+      setPairingsHistory((prev) => ({
+        ...prev,
+        [personId]: 'No history found.',
+      }));
+    }
+  };
+  
+  
+  // Toggle visibility of histories
+  const handleHistoryClick = (personId) => {
+    setVisibleHistories((prev) => {
+      const updated = new Set(prev);
+      if (updated.has(personId)) {
+        updated.delete(personId); // Hide history if already visible
+      } else {
+        updated.add(personId); // Show history if not already visible
+        if (!pairingsHistory[personId]) fetchPairingsHistory(personId); // Fetch history if not already fetched
+      }
+      return updated;
+    });
+  };
+  
+  
+  
   const fetchPeople = useCallback(async () => {
     try {
       setError(null);
@@ -23,7 +89,6 @@ const createNew = () => {
       if (!response.ok) throw new Error('Failed to fetch roster');
       
       const data = await response.json();
-      console.log('Fetched data:', data);
       
       const sortedPeople = [...data].sort((a, b) => {
         if (a.status === "Vet" && b.status !== "Vet") return -1;
@@ -67,7 +132,6 @@ const createNew = () => {
   useEffect(() => {
     if (filteredPeople.length > 0) {
       const list = document.getElementById('sortableList');
-      console.log("list:", list);
       if (list) {
         sortableInstance = new Sortable(list, {
           group: 'shared',
@@ -179,9 +243,8 @@ const createNew = () => {
             </ul>
           </div>
 
-          {/* Pairings */}
+          {/* Pairings Section */}
           <div className="flex-1 flex">
-            {/* Pairings Section */}
             <div className="w-1/2 p-5">
               <h2 className="mb-4 text-md text-gray-900 dark:text-white">Pairings</h2>
               <ul id="sortableList" className="grid grid-cols-2 gap-2">
@@ -189,12 +252,26 @@ const createNew = () => {
                   <li
                     key={person.id}
                     data-id={person.id.toString()}
-                    className="sortable-item text-sm inline-flex items-center justify-between w-full p-2 text-gray-500 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-green-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+                    className="sortable-item text-sm inline-flex flex-col items-start justify-between w-full p-2 text-gray-500 border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-green-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
                   >
-                    <span>{person.name}</span>
-                    <div className="flex items-center">
-                      <img src="drag.svg" alt="drag icon" className="w-4 h-4 filter invert" />
+                    <div className="flex items-center justify-between w-full">
+                      <span>{person.name}</span>
+                      <div className="flex items-center">
+                        <img
+                          src="history.svg"
+                          alt="history icon"
+                          className="w-4 h-4 mx-1 filter invert"
+                          onClick={() => handleHistoryClick(person.id)}
+                        />
+                        <img src="drag.svg" alt="drag icon" className="w-4 h-4 filter invert" />
+                      </div>
                     </div>
+                    {/* Show history if visible */}
+                    {visibleHistories.has(person.id) && (
+                      <div className="mt-2 text-left text-sm bg-gray-700 text-white rounded-lg p-2">
+                        {pairingsHistory[person.id] || 'Loading history...'}
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
